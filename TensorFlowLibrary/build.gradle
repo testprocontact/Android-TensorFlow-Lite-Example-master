@@ -16,7 +16,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -43,7 +43,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.github.testprocontact' //your git id
                 artifactId = 'Android-TensorFlow-Lite-Example-master' //your-repository
-                version = '1.3' // As same as the Tag
+                version = '1.4' // As same as the Tag
             }
         }
     }
