@@ -1,0 +1,39 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 32
+    defaultConfig {
+        applicationId "com.amitshekhar.tflite"
+        minSdkVersion 21
+        targetSdkVersion 32
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    aaptOptions {
+        noCompress "tflite"
+        noCompress "lite"
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.4.2'
+    implementation 'com.wonderkiln:camerakit:0.13.1'
+//    compile 'org.tensorflow:tensorflow-lite:+'
+    implementation 'com.github.testprocontact:innovation:1.1'
+//    implementation 'com.github.testprocontact:Android-TensorFlow-Lite-Example-master:1.0'
+    implementation project(path: ':TensorFlowLibrary')
+//    implementation project(":TensorFlowLibrary")
+//    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
