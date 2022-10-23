@@ -1,6 +1,7 @@
 package com.learnlanguage.tensorflowlibrary;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.res.AssetFileDescriptor;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
@@ -25,7 +26,10 @@ import java.util.PriorityQueue;
  */
 
 public class TensorFlowImageClassifier implements Classifier {
-
+    private static final String MODEL_PATH = "mobilenet_quant_v1_224.tflite";
+    private static final boolean QUANT = true;
+    private static final String LABEL_PATH = "labels.txt";
+    private static final int INPUT_SIZE = 224;
     private static final int MAX_RESULTS = 3;
     private static final int BATCH_SIZE = 1;
     private static final int PIXEL_SIZE = 3;
@@ -43,12 +47,19 @@ public class TensorFlowImageClassifier implements Classifier {
 
     }
 
+    public static Classifier create(Context context) throws IOException {
+        TensorFlowImageClassifier classifier = new TensorFlowImageClassifier();
+        classifier.interpreter = new Interpreter(classifier.loadModelFile(context.getAssets(), MODEL_PATH), new Interpreter.Options());
+        classifier.labelList = classifier.loadLabelList(context.getAssets(), LABEL_PATH);
+        classifier.inputSize = INPUT_SIZE;
+        classifier.quant = QUANT;
+        return classifier;
+    }
     public static Classifier create(AssetManager assetManager,
                              String modelPath,
                              String labelPath,
                              int inputSize,
                              boolean quant) throws IOException {
-
         TensorFlowImageClassifier classifier = new TensorFlowImageClassifier();
         classifier.interpreter = new Interpreter(classifier.loadModelFile(assetManager, modelPath), new Interpreter.Options());
         classifier.labelList = classifier.loadLabelList(assetManager, labelPath);
